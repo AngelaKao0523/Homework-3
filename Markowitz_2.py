@@ -74,6 +74,21 @@ class MyPortfolio:
         """
         TODO: Complete Task 4 Below
         """
+        
+        for i in range(13, len(self.price)):
+            sma = self.price.iloc[i - 13: i][assets].mean()
+            prev_price = self.price.iloc[i - 1][assets]
+            weight = []
+            for ma, p in zip(sma, prev_price):
+                if p > ma:
+                    weight.append(1)
+                else:
+                    weight.append(0)
+            if sum(weight) == 0:
+                self.portfolio_weights.iloc[i][assets] = 0
+            else:
+                weight = [x / sum(weight) for x in weight]
+                self.portfolio_weights.iloc[i][assets] = weight
 
         """
         TODO: Complete Task 4 Above
